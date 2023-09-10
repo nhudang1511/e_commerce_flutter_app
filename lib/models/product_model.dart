@@ -21,7 +21,7 @@ class Product extends Equatable{
   List<Object?> get props => [name, category, imageUrl, price, isRecommended, isPopular];
 
   static List<Product> products = [
-   const Product(
+    const Product(
       name: 'Soft Drink #1',
       category: 'Soft Drinks',
       imageUrl:

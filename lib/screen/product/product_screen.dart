@@ -6,6 +6,9 @@ import 'package:e_commerce/models/wishlist_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/cart/cart_bloc.dart';
+import '../../blocs/cart/cart_event.dart';
+import '../../blocs/cart/cart_state.dart';
 import '../../blocs/wishlist/wishlist_state.dart';
 import '../../widget/widgets.dart';
 
@@ -36,17 +39,29 @@ class ProductScreen extends StatelessWidget {
               BlocBuilder<WishlistBloc, WishlistState>(
                 builder: (context, state) {
                   return IconButton(
-                  onPressed: (){
-                    context.read<WishlistBloc>().add(AddWishlistProduct(product: product));
+                      onPressed: (){
+                        context.read<WishlistBloc>().add(AddWishlistProduct(product: product));
+
+                        final snackBar = SnackBar(content: Text('Added to your wishlist'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
+                      icon: const Icon(Icons.favorite, color: Colors.white,));
                   },
-                  icon: const Icon(Icons.favorite, color: Colors.white,));
+              ),
+              BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.white),
+                    onPressed: (){
+                      context
+                          .read<CartBloc>()
+                          .add(CartProductAdded(product));
+                      Navigator.pushNamed(context, '/cart');
+                    },
+                    child: Text('ADD TO CART', style: Theme.of(context).textTheme.headline3!),
+                  );
   },
-),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white),
-                  onPressed: (){},
-                  child: Text('ADD TO CART', style: Theme.of(context).textTheme.headline3!),
-              )
+)
             ],
           ),
         ),
