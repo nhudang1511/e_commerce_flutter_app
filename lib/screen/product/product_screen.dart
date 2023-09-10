@@ -42,7 +42,7 @@ class ProductScreen extends StatelessWidget {
                       onPressed: (){
                         context.read<WishlistBloc>().add(AddWishlistProduct(product: product));
 
-                        final snackBar = SnackBar(content: Text('Added to your wishlist'));
+                        const snackBar = SnackBar(content: Text('Added to your wishlist'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                       icon: const Icon(Icons.favorite, color: Colors.white,));

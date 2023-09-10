@@ -80,8 +80,11 @@ class ProductCard extends StatelessWidget {
                                 context
                                     .read<CartBloc>()
                                     .add(CartProductAdded(product));
+                                const snackBar = SnackBar(content: Text('Added to your cart'));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               },
-                                  icon: const Icon(Icons.add_circle, color: Colors.white,)));}
+                                  icon: const Icon(Icons.add_circle, color: Colors.white,)));
+                        }
                         else{
                           return const Text('Something went wrong');
                         }},
