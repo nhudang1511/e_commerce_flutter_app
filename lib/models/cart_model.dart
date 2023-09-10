@@ -15,7 +15,20 @@ class Cart extends Equatable{
       return 10.0;
     }
   }
-  
+
+  Map productQuantity(products){
+    var quantity = Map();
+    products.forEach((element) {
+      if(!quantity.containsKey(element)){
+        quantity[element] = 1;
+      }
+      else{
+        quantity[element] += 1;
+      }
+    });
+    return quantity;
+  }
+
   double total(subtotal, deliveryFee){
     return subtotal + deliveryFee(subtotal);
   }
