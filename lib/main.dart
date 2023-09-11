@@ -1,6 +1,9 @@
 import 'package:e_commerce/blocs/cart/cart_event.dart';
+import 'package:e_commerce/blocs/category/category_bloc.dart';
+import 'package:e_commerce/blocs/category/category_event.dart';
 import 'package:e_commerce/blocs/wishlist/wishlist_event.dart';
 import 'package:e_commerce/config/app_route.dart';
+import 'package:e_commerce/repositories/category/category_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +27,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (BuildContext context) =>  WishlistBloc()..add(StartWishlist())),
-        BlocProvider(create: (BuildContext context) =>  CartBloc()..add(CartStarted()))
+        BlocProvider(create: (BuildContext context) =>  CartBloc()..add(CartStarted())),
+        BlocProvider(create: (_) => CategoryBloc(categoryRepository: CategoryRepository())..add(LoadCategories()))
       ],
       child: MaterialApp(
         title: 'Zero to Unicorn',
