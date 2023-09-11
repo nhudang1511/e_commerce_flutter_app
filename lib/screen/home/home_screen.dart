@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/category/category_bloc.dart';
 import '../../blocs/category/category_state.dart';
+import '../../blocs/product/product_bloc.dart';
+import '../../blocs/product/product_state.dart';
 import '../../models/models.dart';
 import '../../widget/widgets.dart';
 
@@ -50,9 +52,41 @@ class HomeScreen extends StatelessWidget {
             const SectionTitle(title: 'RECOMMENDED'),
             // ProductCard(product: Product.products[0]),
             //Product Carousel
-            ProductCarousel(products: Product.products.where((element) => element.isRecommended).toList()),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ProductLoaded) {
+                  return ProductCarousel
+                    (products: state.products.where((element) =>
+                  element.isRecommended).toList());
+                }
+                else {
+                  return const Text('Something went wrong');
+                }
+              }
+            ),
             const SectionTitle(title: 'POPULAR'),
-            ProductCarousel(products: Product.products.where((element) => element.isPopular).toList()),
+            BlocBuilder<ProductBloc, ProductState>(
+                builder: (context, state) {
+                  if (state is ProductLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is ProductLoaded) {
+                    return ProductCarousel
+                      (products: state.products.where((element) =>
+                    element.isPopular).toList());
+                  }
+                  else {
+                    return const Text('Something went wrong');
+                  }
+                }
+            ),
           ],
         ),
       ),
