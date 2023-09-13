@@ -40,6 +40,7 @@ class CheckoutScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(primary: Colors.white),
                     onPressed: (){
                       context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
+                      Navigator.pushNamed(context, '/order-confirmation');
                     },
                     child: Text('ORDER NOW', style: Theme.of(context).textTheme.headline3!),
                   );

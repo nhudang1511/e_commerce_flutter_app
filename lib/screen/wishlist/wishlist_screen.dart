@@ -3,27 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/wishlist/wishlist_bloc.dart';
 import '../../blocs/wishlist/wishlist_state.dart';
-import '../../models/models.dart';
 import '../../widget/widgets.dart';
 
 class WishlistScreen extends StatelessWidget {
   static const String routeName = '/wishlist';
 
+  const WishlistScreen({super.key});
+
   static Route route() {
     return MaterialPageRoute(
         settings: const RouteSettings(name: routeName),
-        builder: (_) => WishlistScreen());
+        builder: (_) => const WishlistScreen());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'WishList'),
-      bottomNavigationBar: CustomeNavBar(),
+      appBar: const CustomAppBar(title: 'WishList'),
+      bottomNavigationBar: const CustomeNavBar(),
       body: BlocBuilder<WishlistBloc, WishlistState>(
         builder: (context, state) {
           if(state is WishListLoading){
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if(state is WishListLoaded){
             return GridView.builder(
@@ -47,7 +48,7 @@ class WishlistScreen extends StatelessWidget {
             );
           }
           else{
-            return Text('Something went wrong');
+            return const Text('Something went wrong');
           }
         },
       ),
