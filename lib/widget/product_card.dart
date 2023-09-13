@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/cart/cart_bloc.dart';
 import '../blocs/cart/cart_state.dart';
+import '../blocs/wishlist/wishlist_bloc.dart';
+import '../blocs/wishlist/wishlist_event.dart';
+import '../blocs/wishlist/wishlist_state.dart';
 import '../models/models.dart';
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -90,8 +93,21 @@ class ProductCard extends StatelessWidget {
                         }},
                     ),
                     isWishlist ? Expanded(
-                        child: IconButton(onPressed: (){},
-                            icon: const Icon(Icons.delete, color: Colors.white,))
+                        child: BlocBuilder<WishlistBloc, WishlistState>(builder: (context, state) {
+                          if(state is WishListLoading){
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                          if(state is WishListLoaded){
+                            return IconButton(onPressed: (){
+                              context.read<WishlistBloc>().add(RemoveProductFromWishlist(product: product));
+                            },
+                                icon: const Icon(Icons.delete, color: Colors.white,));
+                          }
+                          else{
+                           return const Text('Something went wrong');
+                          }
+                          },
+                        )
                     ) : SizedBox()
                   ],
                 ),
