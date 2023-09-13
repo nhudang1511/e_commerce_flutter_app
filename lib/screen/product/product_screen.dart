@@ -55,7 +55,7 @@ class ProductScreen extends StatelessWidget {
                     onPressed: (){
                       context
                           .read<CartBloc>()
-                          .add(CartProductAdded(product));
+                          .add(AddProduct(product));
                       Navigator.pushNamed(context, '/cart');
                     },
                     child: Text('ADD TO CART', style: Theme.of(context).textTheme.headline3!),

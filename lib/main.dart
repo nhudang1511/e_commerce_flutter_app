@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (BuildContext context) =>  WishlistBloc()..add(StartWishlist())),
-        BlocProvider(create: (BuildContext context) =>  CartBloc()..add(CartStarted())),
+        BlocProvider(create: (BuildContext context) =>  CartBloc()..add(LoadCart())),
         BlocProvider(create: (_) => CategoryBloc(categoryRepository: CategoryRepository())..add(LoadCategories())),
         BlocProvider(create: (_) => ProductBloc(productRepository: ProductRepository())..add(LoadProducts())),
         BlocProvider(create: (context) =>

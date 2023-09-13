@@ -79,7 +79,7 @@ class ProductCard extends StatelessWidget {
                               child: IconButton(onPressed: (){
                                 context
                                     .read<CartBloc>()
-                                    .add(CartProductAdded(product));
+                                    .add(AddProduct(product));
                                 const snackBar = SnackBar(content: Text('Added to your cart'));
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               },
