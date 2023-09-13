@@ -26,7 +26,7 @@ class CustomeNavBar extends StatelessWidget implements PreferredSizeWidget{
               icon: Icon(Icons.shopping_cart, color: Colors.white),),
             IconButton(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/person');
+                  Navigator.pushNamed(context, '/profile');
                 },
                 icon: Icon(Icons.person, color: Colors.white))
           ],
