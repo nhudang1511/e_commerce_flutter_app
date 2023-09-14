@@ -9,6 +9,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<LoadCart>(_onLoadCart);
     on<AddProduct>(_onAddProduct);
     on<RemoveProduct>(_onRemoveProduct);
+    on<RemoveAllProduct>(_onRemoveAllProduct);
   }
 
   void _onLoadCart(event, Emitter<CartState> emit) async{
@@ -41,6 +42,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(CartLoaded(
           cart: Cart(
               products: List.from(state.cart.products)..remove(event.product)
+          ),
+        ));
+      }
+      on Exception{
+        emit(CartError());}
+    }
+  }
+  void _onRemoveAllProduct(event, Emitter<CartState> emit){
+    final state = this.state;
+    if(state is CartLoaded){
+      try{
+        emit(CartLoaded(
+          cart: Cart(
+              products: []
           ),
         ));
       }

@@ -1,6 +1,10 @@
+import 'package:e_commerce/blocs/cart/cart_event.dart';
 import 'package:e_commerce/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../blocs/cart/cart_bloc.dart';
+import '../../blocs/cart/cart_state.dart';
 import '../../widget/widgets.dart';
 
 class OrderConfirmationScreen extends StatelessWidget {
@@ -18,7 +22,37 @@ class OrderConfirmationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Order Confirmation'),
-      bottomNavigationBar: const CustomeNavBar(),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: SizedBox(
+          height: 70,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+                if(state is CartLoading){
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if(state is CartLoaded){
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.white),
+                    onPressed: (){
+                      context
+                          .read<CartBloc>()
+                          .add(RemoveAllProduct(state.cart.products));
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: Text('COUNTINUE SHOPPING', style: Theme.of(context).textTheme.headline3!),
+                  );
+                }
+                else{
+                  return const Text('Something went wrong');
+                }},
+              )
+            ],
+          ),
+        ),
+      ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
