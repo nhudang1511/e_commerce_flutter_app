@@ -82,6 +82,7 @@ class SignupScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       context.read<SignupCubit>().signUpWithCredentials();
+                      Navigator.pushNamed(context, '/');
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(),

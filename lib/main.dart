@@ -39,6 +39,9 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             ),
           ),
+          RepositoryProvider(
+            create: (context) => CheckoutRepository(),
+          ),
         ],
         child: MultiBlocProvider(
           providers: [

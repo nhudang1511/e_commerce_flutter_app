@@ -117,6 +117,7 @@ class ProfileScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       context.read<AuthRepository>().signOut();
+                      Navigator.pushNamed(context, '/');
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(),

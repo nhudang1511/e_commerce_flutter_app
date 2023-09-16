@@ -29,6 +29,7 @@ class LoginScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: (){
                   context.read<LoginCubit>().logInWithCredentials();
+                  Navigator.pushNamed(context, '/');
                 },
                 child: Text('Log in'),
                 style: ElevatedButton.styleFrom(
