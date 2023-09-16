@@ -1,4 +1,11 @@
+import 'package:e_commerce/blocs/auth/auth_event.dart';
+import 'package:e_commerce/repositories/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/auth/auth_state.dart';
+import '../../cubits/login/login_cubit.dart';
+import '../../cubits/login/login_state.dart';
 import '../../widget/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -12,8 +19,6 @@ class LoginScreen extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passWordController = TextEditingController();
     return Scaffold(
       appBar: const CustomAppBar(title: 'Login'),
       bottomNavigationBar: const CustomeNavBar(),
@@ -21,62 +26,81 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildTextFormField(emailController, context, 'Email'),
-            _buildTextFormField(passWordController, context, 'PassWord'),
+            _EmailInput(),
+            _PasswordInput(),
             SizedBox(
               width: (MediaQuery.of(context).size.width)/2,
               child: ElevatedButton(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/login');
+                  context.read<LoginCubit>().logInWithCredentials();
+                  const snackBar = SnackBar(content: Text('Log in successful'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.pushNamed(context, '/');
                 },
                 child: Text('Log in'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-
+                  backgroundColor: Colors.black),
+                  ),
                 ),
-              ),
+                SizedBox(
+                    width: (MediaQuery.of(context).size.width)/2,
+                    child: ElevatedButton(onPressed: (){
+                      Navigator.pushNamed(context, '/');
+                    }, child: Text('Sign In With Google')))
+              ],
             ),
-            SizedBox(
-                width: (MediaQuery.of(context).size.width)/2,
-                child: ElevatedButton(onPressed: (){
-                  Navigator.pushNamed(context, '/');
-                }, child: Text('Sign In With Google')))
-          ],
         ),
-      ),
-    );
+      );
   }
-  Padding _buildTextFormField(
-      TextEditingController onChanged,
-      BuildContext context,
-      String labelText){
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Row(
-        children: [
-          SizedBox(width: 75,
-            child: Text(
-                labelText,
-                style: Theme.of(context).textTheme.bodyText1),),
-          Expanded(child: TextFormField(
-            //onChanged: onChanged,
-            controller: onChanged,
-            decoration: const InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.only(left: 10),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)
-                )
+}
+class _EmailInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (previous, current) => previous.email != current.email,
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: TextField(
+            onChanged: (email) {
+              context.read<LoginCubit>().emailChanged(email);
+            },
+            decoration: InputDecoration(
+                labelText: 'Email',
+                labelStyle:  Theme.of(context).textTheme.bodyText1,
+                contentPadding: EdgeInsets.only(left: 10)
             ),
-          )
-          )
-        ],
-      ),
+          ),
+        );
+      },
     );
   }
 }
 
-
+class _PasswordInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (previous, current) => previous.password != current.password,
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: TextField(
+            onChanged: (password) {
+              context.read<LoginCubit>().passwordChanged(password);
+            },
+            decoration: InputDecoration(
+                labelText: 'Password',
+                labelStyle:  Theme.of(context).textTheme.bodyText1,
+                contentPadding: EdgeInsets.only(left: 10)
+            ),
+            obscureText: true,
+          ),
+        );
+      },
+    );
+  }
+}
 
 
 

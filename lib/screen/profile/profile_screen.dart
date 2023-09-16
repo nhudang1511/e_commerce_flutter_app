@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../blocs/category/category_bloc.dart';
-import '../../blocs/category/category_state.dart';
-import '../../blocs/product/product_bloc.dart';
-import '../../blocs/product/product_state.dart';
-import '../../models/models.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/profile/profile_bloc.dart';
+import '../../blocs/profile/profile_event.dart';
+import '../../blocs/profile/profile_state.dart';
+import '../../repositories/auth/auth_repository.dart';
+import '../../repositories/user/user_repository.dart';
 import '../../widget/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -16,38 +16,74 @@ class ProfileScreen extends StatelessWidget {
   static Route route(){
     return MaterialPageRoute(
         settings: const RouteSettings(name: routeName),
-        builder: (_) => const ProfileScreen());
+        builder: (context) => BlocProvider<ProfileBloc>
+          (create: (context) => ProfileBloc(
+            authBloc:  BlocProvider.of<AuthBloc>(context),
+            userRepository: context.read<UserRepository>())..add(
+          LoadProfile(context.read<AuthBloc>().state.authUser),
+        ),
+          child: ProfileScreen(),
+));
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Profile'),
       bottomNavigationBar: const CustomeNavBar(),
-      body:  Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('You are not log in', style: Theme.of(context).textTheme.headline4,),
-            SizedBox(
+      body:  BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+        if(state is ProfileLoading){
+          return Center(child: CircularProgressIndicator());
+        }
+        if(state is ProfileLoaded){
+          return Center(
+            child: SizedBox(
               width: (MediaQuery.of(context).size.width)/2,
               child: ElevatedButton(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/login');
+                  context.read<AuthRepository>().signOut();
                 },
-                child: Text('Log in'),
+                child: Text('Sign out'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
 
                 ),
               ),
             ),
-            SizedBox(
-              width: (MediaQuery.of(context).size.width)/2,
-                child: ElevatedButton(onPressed: (){
-                  Navigator.pushNamed(context, '/signup');
-                }, child: Text('Sign up')))
-          ],
-        ),
+          );
+        }
+        if(state is ProfileUnauthenticated){
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('You are not log in', style: Theme.of(context).textTheme.headline4,),
+                SizedBox(
+                  width: (MediaQuery.of(context).size.width)/2,
+                  child: ElevatedButton(
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    child: Text('Log in'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+
+                    ),
+                  ),
+                ),
+                SizedBox(
+                    width: (MediaQuery.of(context).size.width)/2,
+                    child: ElevatedButton(onPressed: (){
+                      Navigator.pushNamed(context, '/signup');
+                      context.read<AuthRepository>().signOut();
+                    }, child: Text('Sign up')))
+              ],
+            ),
+          );
+        }
+        else{
+          return Text('Something went wrong');
+        }
+      },
       ),
     );
   }
