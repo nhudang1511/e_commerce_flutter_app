@@ -1,6 +1,4 @@
-import 'package:e_commerce/models/models.dart';
-import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
+part of 'auth_bloc.dart';
 
 abstract class AuthEvent extends Equatable{
   const AuthEvent();

@@ -1,10 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/auth/auth_bloc.dart';
-import '../../blocs/profile/profile_bloc.dart';
-import '../../blocs/profile/profile_event.dart';
-import '../../blocs/profile/profile_state.dart';
+import '../../blocs/blocs.dart';
 import '../../repositories/auth/auth_repository.dart';
 import '../../repositories/user/user_repository.dart';
 import '../../widget/widgets.dart';

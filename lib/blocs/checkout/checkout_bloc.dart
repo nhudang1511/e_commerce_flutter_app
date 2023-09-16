@@ -1,12 +1,12 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce/blocs/cart/cart_state.dart';
-
+import 'package:equatable/equatable.dart';
+import '../../models/models.dart';
 import '../../repositories/checkout/checkout_repository.dart';
-import '../cart/cart_bloc.dart';
-import 'checkout_event.dart';
-import 'checkout_state.dart';
+import '../blocs.dart';
+part 'checkout_event.dart';
+part 'checkout_state.dart';
+
 
 class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 

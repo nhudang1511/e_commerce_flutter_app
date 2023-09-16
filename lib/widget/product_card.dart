@@ -1,11 +1,6 @@
-import 'package:e_commerce/blocs/cart/cart_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../blocs/cart/cart_bloc.dart';
-import '../blocs/cart/cart_state.dart';
-import '../blocs/wishlist/wishlist_bloc.dart';
-import '../blocs/wishlist/wishlist_event.dart';
-import '../blocs/wishlist/wishlist_state.dart';
+import '../blocs/blocs.dart';
 import '../models/models.dart';
 class ProductCard extends StatelessWidget {
   final Product product;

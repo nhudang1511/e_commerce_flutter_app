@@ -1,9 +1,5 @@
-import 'package:e_commerce/blocs/auth/auth_event.dart';
-import 'package:e_commerce/repositories/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/auth/auth_bloc.dart';
-import '../../blocs/auth/auth_state.dart';
 import '../../cubits/login/login_cubit.dart';
 import '../../cubits/login/login_state.dart';
 import '../../widget/widgets.dart';

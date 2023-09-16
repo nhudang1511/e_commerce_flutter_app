@@ -7,9 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import '../../repositories/auth/auth_repository.dart';
 import '../../repositories/user/user_repository.dart';
 import '/models/models.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
-
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;

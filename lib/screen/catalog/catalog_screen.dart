@@ -1,9 +1,7 @@
 import 'package:e_commerce/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../blocs/product/product_bloc.dart';
-import '../../blocs/product/product_state.dart';
+import '../../blocs/blocs.dart';
 import '../../widget/widgets.dart';
 
 class CatalogScreen extends StatelessWidget {

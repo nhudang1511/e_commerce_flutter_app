@@ -1,12 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../blocs/category/category_bloc.dart';
-import '../../blocs/category/category_state.dart';
-import '../../blocs/product/product_bloc.dart';
-import '../../blocs/product/product_state.dart';
-import '../../models/models.dart';
 import '../../widget/widgets.dart';
 
 class SignupScreen extends StatelessWidget {

@@ -1,10 +1,13 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../models/models.dart';
 import '../../repositories/user/user_repository.dart';
-import '../auth/auth_bloc.dart';
-import '../auth/auth_event.dart';
-import 'profile_event.dart';
-import 'profile_state.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+
+import '../blocs.dart';
+part 'profile_event.dart';
+part 'profile_state.dart';
 
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {

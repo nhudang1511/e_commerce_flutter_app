@@ -1,8 +1,6 @@
-import 'package:e_commerce/blocs/checkout/checkout_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/checkout/checkout_bloc.dart';
-import '../../blocs/checkout/checkout_state.dart';
+import '../../blocs/blocs.dart';
 import '../../widget/widgets.dart';
 
 class CheckoutScreen extends StatelessWidget {

@@ -1,10 +1,8 @@
-import 'package:e_commerce/blocs/cart/cart_event.dart';
 import 'package:e_commerce/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../blocs/cart/cart_bloc.dart';
-import '../../blocs/cart/cart_state.dart';
+import '../../blocs/blocs.dart';
 import '../../widget/widgets.dart';
 
 class OrderConfirmationScreen extends StatelessWidget {

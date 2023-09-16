@@ -1,10 +1,3 @@
-import 'package:e_commerce/blocs/cart/cart_event.dart';
-import 'package:e_commerce/blocs/category/category_bloc.dart';
-import 'package:e_commerce/blocs/category/category_event.dart';
-import 'package:e_commerce/blocs/checkout/checkout_bloc.dart';
-import 'package:e_commerce/blocs/product/product_bloc.dart';
-import 'package:e_commerce/blocs/product/product_event.dart';
-import 'package:e_commerce/blocs/wishlist/wishlist_event.dart';
 import 'package:e_commerce/config/app_route.dart';
 import 'package:e_commerce/repositories/auth/auth_repository.dart';
 import 'package:e_commerce/repositories/category/category_repository.dart';
@@ -15,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/auth/auth_bloc.dart';
+import 'blocs/blocs.dart';
 import 'blocs/cart/cart_bloc.dart';
 import 'blocs/wishlist/wishlist_bloc.dart';
 import 'config/theme.dart';
@@ -76,6 +70,10 @@ class MyApp extends StatelessWidget {
               create: (_) => ProductBloc(
                 productRepository: ProductRepository(),
               )..add(LoadProducts()),
+            ),
+            BlocProvider(
+              create: (_) => WishlistBloc(
+              )..add(LoadWishlist()),
             ),
             BlocProvider(
               create: (context) => LoginCubit(

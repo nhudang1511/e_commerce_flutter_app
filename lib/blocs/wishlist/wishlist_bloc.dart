@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/models/wishlist_model.dart';
+import 'package:equatable/equatable.dart';
 
-import 'wishlist_event.dart';
-import 'wishlist_state.dart';
+import '../../models/models.dart';
+part 'wishlist_event.dart';
+part 'wishlist_state.dart';
 
 class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   WishlistBloc() : super(WishListLoading()){

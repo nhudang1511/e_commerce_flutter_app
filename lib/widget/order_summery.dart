@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../blocs/cart/cart_bloc.dart';
-import '../blocs/cart/cart_state.dart';
+import '../blocs/blocs.dart';
 
 class OrderSummery extends StatelessWidget {
   const OrderSummery({super.key});

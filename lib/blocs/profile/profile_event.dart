@@ -1,7 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-
-import '../../models/models.dart';
+part of 'profile_bloc.dart';
 abstract class ProfileEvent extends Equatable {
   const ProfileEvent();
 

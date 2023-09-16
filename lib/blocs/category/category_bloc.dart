@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 
+import '../../models/models.dart';
 import '../../repositories/category/category_repository.dart';
-import 'category_event.dart';
-import 'category_state.dart';
+part 'category_event.dart';
+part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 

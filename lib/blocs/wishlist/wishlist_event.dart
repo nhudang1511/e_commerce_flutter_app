@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-import '../../models/product_model.dart';
+part of 'wishlist_bloc.dart';
 
 abstract class WishlistEvent extends Equatable{
   const WishlistEvent();
