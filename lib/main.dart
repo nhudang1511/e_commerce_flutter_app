@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/blocs.dart';
 import 'config/theme.dart';
 import 'cubits/login/login_cubit.dart';
+import 'cubits/signup/signup_cubit.dart';
 import 'screen/screen.dart';
 
 Future <void> main() async {
@@ -74,6 +75,11 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => LoginCubit(
+                authRepository: context.read<AuthRepository>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => SignupCubit(
                 authRepository: context.read<AuthRepository>(),
               ),
             ),

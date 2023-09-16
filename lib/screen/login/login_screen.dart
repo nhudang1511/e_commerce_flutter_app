@@ -29,9 +29,6 @@ class LoginScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: (){
                   context.read<LoginCubit>().logInWithCredentials();
-                  const snackBar = SnackBar(content: Text('Log in successful'));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.pushNamed(context, '/');
                 },
                 child: Text('Log in'),
                 style: ElevatedButton.styleFrom(

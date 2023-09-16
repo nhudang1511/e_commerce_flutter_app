@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubits/signup/signup_cubit.dart';
 import '../../widget/widgets.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -12,80 +14,129 @@ class SignupScreen extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController fullNameController = TextEditingController();
-    final TextEditingController countryController = TextEditingController();
-    final TextEditingController cityController = TextEditingController();
-    final TextEditingController addressController = TextEditingController();
-    final TextEditingController zipCodeController = TextEditingController();
-    final TextEditingController passWordController = TextEditingController();
-
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Sign up'),
+      appBar: CustomAppBar(title: 'Signup'),
       bottomNavigationBar: const CustomeNavBar(),
-      body:  SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildTextFormField(emailController, context, 'Email'),
-            _buildTextFormField(fullNameController, context, 'Full Name'),
-            _buildTextFormField(countryController, context, 'Country'),
-            _buildTextFormField(cityController, context, 'City'),
-            _buildTextFormField(addressController, context, 'Address'),
-            _buildTextFormField(zipCodeController, context, 'Zip Code'),
-            _buildTextFormField(passWordController, context, 'PassWord'),
-            SizedBox(
-              width: (MediaQuery.of(context).size.width)/2,
-              child: ElevatedButton(
-                onPressed: (){
-                  Navigator.pushNamed(context, '/');
-                },
-                child: Text('Sign up'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: BlocBuilder<SignupCubit, SignupState>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _UserInput(
+                    labelText: 'Email',
+                    onChanged: (value) {
+                      context.read<SignupCubit>().userChanged(
+                        state.user!.copyWith(email: value),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  _UserInput(
+                    labelText: 'Full Name',
+                    onChanged: (value) {
+                      context.read<SignupCubit>().userChanged(
+                        state.user!.copyWith(fullName: value),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  _UserInput(
+                    labelText: 'Country',
+                    onChanged: (value) {
+                      context.read<SignupCubit>().userChanged(
+                        state.user!.copyWith(country: value),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  _UserInput(
+                    labelText: 'City',
+                    onChanged: (value) {
+                      context.read<SignupCubit>().userChanged(
+                        state.user!.copyWith(city: value),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  _UserInput(
+                    labelText: 'Address',
+                    onChanged: (value) {
+                      context.read<SignupCubit>().userChanged(
+                        state.user!.copyWith(address: value),
+                      );
+                    },
+                  ),
+                  _UserInput(
+                    labelText: 'ZIP Code',
+                    onChanged: (value) {
+                      context.read<SignupCubit>().userChanged(
+                        state.user!.copyWith(zipCode: value),
+                      );
+                    },
+                  ),
+                  _PasswordInput(),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<SignupCubit>().signUpWithCredentials();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(),
+                      primary: Colors.black,
+                      fixedSize: Size(200, 40),
+                    ),
+                    child: Text(
+                      'Signup',
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-
-          ],
+            );
+          },
         ),
-      ),
-    );
-  }
-  Padding _buildTextFormField(
-      TextEditingController onChanged,
-      BuildContext context,
-      String labelText){
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Row(
-        children: [
-          SizedBox(width: 75,
-            child: Text(
-                labelText,
-                style: Theme.of(context).textTheme.bodyText1),),
-          Expanded(child: TextFormField(
-            //onChanged: onChanged,
-            controller: onChanged,
-            decoration: const InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.only(left: 10),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)
-                )
-            ),
-          )
-          )
-        ],
       ),
     );
   }
 }
 
+class _UserInput extends StatelessWidget {
+  const _UserInput({
+    Key? key,
+    required this.onChanged,
+    required this.labelText,
+  }) : super(key: key);
 
+  final Function(String)? onChanged;
+  final String labelText;
 
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignupCubit, SignupState>(
+      builder: (context, state) {
+        return TextField(
+          onChanged: onChanged,
+          decoration: InputDecoration(labelText: labelText),
+        );
+      },
+    );
+  }
+}
 
-
-
-
+class _PasswordInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onChanged: (password) {
+        context.read<SignupCubit>().passwordChanged(password);
+      },
+      decoration: const InputDecoration(labelText: 'Password'),
+      obscureText: true,
+    );
+  }
+}
