@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/blocs.dart';
+import '../../models/payment_menthod_model.dart';
 import '../../widget/widgets.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -14,12 +17,6 @@ class CheckoutScreen extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    // final TextEditingController emailController = TextEditingController();
-    // final TextEditingController nameController = TextEditingController();
-    // final TextEditingController addressController = TextEditingController();
-    // final TextEditingController cityController = TextEditingController();
-    // final TextEditingController countryController = TextEditingController();
-    // final TextEditingController zipCodeController = TextEditingController();
     return Scaffold(
       appBar: const CustomAppBar(title: 'Checkout'),
       bottomNavigationBar: BottomAppBar(
@@ -34,14 +31,51 @@ class CheckoutScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if(state is CheckoutLoaded){
-                  return ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white),
-                    onPressed: (){
-                      context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
-                      Navigator.pushNamed(context, '/order-confirmation');
-                    },
-                    child: Text('ORDER NOW', style: Theme.of(context).textTheme.headline3!),
-                  );
+                  if(Platform.isIOS){
+                    switch(state.paymentMethod){
+                      case PaymentMethod.apple_pay:
+                        return ApplePay(
+                            total: state.total!,
+                            products: state.products!);
+                      case PaymentMethod.credit_card:
+                        return Container();
+                      default:
+                        return ApplePay(
+                            total: state.total!,
+                            products: state.products!);
+                    }
+                  }
+                  if(Platform.isAndroid){
+                    switch(state.paymentMethod){
+                      case PaymentMethod.google_pay:
+                        return GooglePay(
+                          products: state.products!,
+                          total: state.total!,
+                        );
+                      case PaymentMethod.credit_card:
+                        return Container(
+                          child: Text(
+                              'Pay with Credit Card',
+                            style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white),
+                          ),
+                        );
+                      default:
+                        return GooglePay(
+                          products: state.products!,
+                          total: state.total!,
+                        );
+                    }
+                  }
+                  else{
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.white),
+                      onPressed: (){
+                        context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
+                        Navigator.pushNamed(context, '/payment');
+                      },
+                      child: Text('ORDER NOW', style: Theme.of(context).textTheme.headline3!),
+                    );
+                  }
                 }
                 else{
                   return const Text('Something went wrong');
@@ -89,6 +123,23 @@ class CheckoutScreen extends StatelessWidget {
                   _buildTextFormField((value){
                     context.read<CheckoutBloc>().add(UpdateCheckout(zipCode: value));
                   }, context, 'Zip Code'),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                    ),
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/payment');
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('SELECT A PAYMENT METHOD', style: Theme.of(context).textTheme.headline5!.copyWith(
+                            color: Colors.white)),
+                        Icon(Icons.navigate_next, color: Colors.white,)
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
                   Text('ORDER SUMMERY',
                     style: Theme.of(context).textTheme.headline3,
                   ),

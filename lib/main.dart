@@ -1,3 +1,4 @@
+import 'package:e_commerce/blocs/payment/payment_bloc.dart';
 import 'package:e_commerce/config/app_route.dart';
 import 'package:e_commerce/repositories/auth/auth_repository.dart';
 import 'package:e_commerce/repositories/category/category_repository.dart';
@@ -54,9 +55,11 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (_) => CartBloc()..add(LoadCart()),
             ),
+            BlocProvider(create: (_) => PaymentBloc()..add(LoadPaymentMethod())),
             BlocProvider(
               create: (context) => CheckoutBloc(
                 cartBloc: context.read<CartBloc>(),
+                paymentBloc: context.read<PaymentBloc>(),
                 checkoutRepository: CheckoutRepository(),
               ),
             ),
