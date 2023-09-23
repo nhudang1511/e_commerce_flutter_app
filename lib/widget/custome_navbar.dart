@@ -20,6 +20,11 @@ class CustomeNavBar extends StatelessWidget implements PreferredSizeWidget{
                 },
                 icon: Icon(Icons.home, color: Colors.white)),
             IconButton(
+                onPressed: (){
+                  Navigator.pushNamed(context, '/search');
+                },
+                icon: Icon(Icons.search, color: Colors.white)),
+            IconButton(
               onPressed: (){
                 Navigator.pushNamed(context, '/cart');
               },

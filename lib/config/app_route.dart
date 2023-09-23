@@ -32,6 +32,8 @@ class AppRouter{
         return SignupScreen.route();
       case PaymentScreen.routeName:
         return PaymentScreen.route();
+      case SearchScreen.routeName:
+        return SearchScreen.route();
       default:
         return _errorRoute();
     }

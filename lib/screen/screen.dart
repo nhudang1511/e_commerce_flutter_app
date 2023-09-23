@@ -10,3 +10,4 @@ export 'profile/profile_screen.dart';
 export 'login/login_screen.dart';
 export 'signup/signup_screen.dart';
 export 'payment/payment_screen.dart';
+export 'search/search_view.dart';
